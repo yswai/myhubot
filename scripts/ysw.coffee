@@ -5,4 +5,3 @@ module.exports = (robot) ->
   robot.respond ' make sound', (res) ->
     res.reply 'Cho cho'
 
-  robot.send "End"
