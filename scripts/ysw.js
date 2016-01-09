@@ -1,3 +1,5 @@
+'use strict';
+
 var exec = require('child_process').exec, child;
 
 module.exports = function (robot) {
@@ -13,26 +15,28 @@ module.exports = function (robot) {
   robot.respond(/anjungsari/i, function (r) {
     robot.http('https://www.kimonolabs.com/api/5rcqx6ba?apikey=0Q18ElsbMLoabCQPHSRnOMpqjaE6Y4qz')
       .get()(function (err, getResp, body) {
+        let body2 = JSON.parse(body);
         if (err) {
           r.reply('Error occurred');
           console.log(err);
           return;
         }
-        r.reply(JSON.stringify(body, null, '\t'));
+        r.reply(JSON.stringify(body2, null, '\t'));
       });
   });
 
   robot.respond(/paultan/i, function (r) {
     robot.http('https://www.kimonolabs.com/api/3e1v313e?apikey=0Q18ElsbMLoabCQPHSRnOMpqjaE6Y4qz')
       .get()(function (err, getResp, body) {
+        let body2 = JSON.parse(body);
         if (err) {
           r.reply('Error occurred');
           console.log(err);
           return;
         }
         console.log(getResp);
-        console.log(JSON.stringify(body, null, '\t'));
-        r.reply(JSON.stringify(body, null, '\t'));
+        console.log(JSON.stringify(body2, null, '\t'));
+        r.reply(JSON.stringify(body2, null, '\t'));
       });
   });
 
@@ -45,6 +49,18 @@ module.exports = function (robot) {
         console.log('exec error: ' + error);
       }
     });
+  });
+
+  robot.hear(/latest oil price/i, function(robot) {
+    robot.http('https://www.kimonolabs.com/api/4u3346s2?apikey=0Q18ElsbMLoabCQPHSRnOMpqjaE6Y4qz&authorization=kFWOVyWSKa0cIffBEkM0JEQHUhKkUeSK')
+      .get() (function(err, resp, body) {
+        let body2 = JSON.parse(body);
+        if (err) {
+          robot.reply(err);
+          return;
+        }
+        robot.reply(JSON.stringify(body2.results.collection1[0].price, null, '\t'));
+      });
   });
 
 };
